@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', user_views.index, name='index'),
     path('v1/users/', user_views.users_list, name='userslist'),
+    path('v1/users/<int:id>/', user_views.get_user, name='userdetails'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

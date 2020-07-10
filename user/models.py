@@ -143,6 +143,8 @@ class ClassEnrollment(models.Model):
 		unique_together = (('student_id', 'class_id'),)
 
 
+# class SubmissionResources(models.Model):
+# 	submissions_resource_id = 
 
 
 
