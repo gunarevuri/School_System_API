@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>user trail</title>
+</head>
+
+<body>
+	<p>Here user trail project</p>
+	{% for user in users %}
+	<p>{{user.first_name}}</p>
+	<p>{{user.last_name}}</p>
+	<p>{{user.phone_number}}</p>
+	<p>{{user.status}}</p>
+	<p>{{user.created_at}}</p>
+	<p>{{user.updated_at}}</p>
+	{% endfor %}
+
+</body>
+</html>
