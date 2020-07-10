@@ -23,6 +23,7 @@ import user.views as user_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', user_views.index, name='index'),
+    path('v1/users/', user_views.users_list, name='userslist'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
