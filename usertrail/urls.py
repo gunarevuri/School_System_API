@@ -25,6 +25,11 @@ urlpatterns = [
 	path('', user_views.index, name='index'),
 	path('v1/users/', user_views.users_list, name='userslist'),
 	path('v1/users/<int:id>/', user_views.get_user, name='userdetails'),
+	path('v1/users/submissions/<int:id>/', user_views.get_user_submissions, name='get_user_submissions'),
+	path('v1/users/submissions/', user_views.get_all_submissions, name='get_all_submissions'),
+
+
+
 	path('class/v1/users/', user_views.UserList.as_view(), name='classuserlist'),
 	path('class/v1/users/<int:user_id>/', user_views.UserRetrieve.as_view(), name='classretrieve'),
 	path('class/v1/users/delete/<int:user_id>/', user_views.UserDestroy.as_view(), name='classdestroy'),

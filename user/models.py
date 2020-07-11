@@ -143,6 +143,9 @@ class Homework(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
+	def __str__(self):
+		return 'home work for{0}  from Teacher {1} {2}'.format(self.class_subject_id.class_id.grade, self.teacher_id.user_id.first_name, self.teacher_id.user_id.last_name)
+
 class Submissions(models.Model):
 	submission_id = models.AutoField(primary_key = True)
 	homework_id = models.ForeignKey(Homework, on_delete = models.CASCADE)
@@ -171,6 +174,9 @@ class SubmissionResources(models.Model):
 	caption = models.CharField(max_length=255)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return '{} resource_link {}'.format(self.submission_id.student_id.student_name, self.resource_link)
 
 class Corrections(models.Model):
 	correction_id = models.AutoField(primary_key = True)

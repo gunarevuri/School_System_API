@@ -4,7 +4,14 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import user
 from rest_framework import status
 from rest_framework.parsers import JSONParser
+
+
 from user.serializers import userSerializer
+from user.serializers import SubmissionsSerializer ,SubmissionResourcesSerializer
+
+from user.models import user, Submissions, SubmissionResources
+
+
 from rest_framework.decorators import api_view,APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
@@ -66,7 +73,31 @@ def get_user(request, id):
 		user_detail.delete()
 		return Response(status= status.HTTP_204_NO_CONTENT)
 
-#####----------We can also use class based views to List , update, delete user from DB (CRUD)-------------------##
+
+@api_view(['GET', 'PUT', 'POST', 'DELETE'])
+def get_user_submissions(request, id):
+
+
+	if request.method == 'GET':
+		student_submissions = Submissions.objects.filter(student_id = id).first()
+
+	# store all submission by specific student in submissions_by_student 
+		submissions_by_student = SubmissionResources.objects.filter(submission_id = student_submissions.submission_id ).all()
+		serializer = SubmissionResourcesSerializer(submissions_by_student, many = True)
+	# return Response(serializer.data)
+		# serializer = SubmissionsSerializer(student_submissions)
+		return Response(serializer.data)
+
+@api_view(['GET'])
+def get_all_submissions(request):
+	if request.method == 'GET':
+		submissions = Submissions.objects.all()
+		serializer = SubmissionsSerializer(submissions, many = True)
+		return Response(serializer.data)
+
+
+
+
 
 
 class UserList(generics.ListAPIView):
@@ -128,6 +159,7 @@ class UserUpdate(generics.UpdateAPIView):
 
 
 
+## ------ API to get all submissions and submission to specific user-----##
 
 
 
