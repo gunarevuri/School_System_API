@@ -4,6 +4,9 @@ from phonenumber_field.modelfields import PhoneNumberField
 status_field = ['actice','inactive']
 enroll_status = ['enrolled','not_enrolled']
 class_subjects = ['maths','science','social','phisics']
+homework_resource_type=[]
+correction_resource_type= []
+submissions_resource_type = []
 
 class user(models.Model):
 	user_id = models.AutoField(primary_key=True)
@@ -81,6 +84,23 @@ class Teacher(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 
+class Board(models.Model):
+	board_id = models.AutoField(primary_key=True)
+	board_name = models.CharField(max_length=255)
+	is_state_board = models.BooleanField()
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+class School_Board_Bridge(models.Model):
+	school_id = models.IntegerField()
+	board_id = models.IntegerField()
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	class Meta:
+		unique_together = [('school_id','board_id'),]
+
+
 
 
 class State(models.Model):
@@ -135,7 +155,7 @@ class Submissions(models.Model):
 class ClassEnrollment(models.Model):
 	student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
 	class_id = models.ForeignKey(Class, on_delete=models.CASCADE )
-	enrollment_status = models.CharField(choices=[(x,x) for x in enroll_status], max_length=50)
+	enrollment_status = models.CharField(choices=[(x,x) for x in enroll_status], max_length=50,  null=True,blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
@@ -143,8 +163,42 @@ class ClassEnrollment(models.Model):
 		unique_together = (('student_id', 'class_id'),)
 
 
-# class SubmissionResources(models.Model):
-# 	submissions_resource_id = 
+class SubmissionResources(models.Model):
+	submissions_resource_id = models.AutoField(primary_key=True)
+	submission_id = models.ForeignKey(Submissions, on_delete = models.CASCADE)
+	resource_type = models.CharField(choices=[(x,x) for x in submissions_resource_type], max_length= 100, null=True,blank=True)
+	resource_link = models.URLField(max_length=500)
+	caption = models.CharField(max_length=255)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+class Corrections(models.Model):
+	correction_id = models.AutoField(primary_key = True)
+	submissions_id = models.ForeignKey(Submissions, on_delete = models.CASCADE)
+	marks_received = models.DecimalField(max_digits=5, decimal_places=2)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+
+class CorrectionsResources(models.Model):
+	correction_resource_id = models.AutoField(primary_key=True)
+	correction_id = models.ForeignKey(Corrections, on_delete = models.CASCADE)
+	resource_type = models.CharField(choices=[(x,x) for x in correction_resource_type], max_length=200, null=True,blank=True)
+	resource_link = models.URLField(max_length= 500)
+	caption = models.CharField(max_length= 255)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+class HomeworkResources(models.Model):
+
+	homework_resource_id = models.AutoField( primary_key = True)
+	homework_id = models.ForeignKey(Homework, on_delete = models.CASCADE)
+	resource_type = models.CharField(choices=[(x,x) for x in homework_resource_type], max_length=200, null=True,blank=True)
+	file_field = models.FileField(upload_to='files_images/homeworkresources/%Y/%m/%d/')
+
+
+
+
 
 
 

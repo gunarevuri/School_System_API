@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import user, School, userPersona, Student,Parent,Teacher, State, Class, ClassSubjects, Homework, Submissions, ClassEnrollment
+from .models import user, School, userPersona, Student,Parent,Teacher, State, Class, ClassSubjects, Homework, Submissions, ClassEnrollment,CorrectionsResources,Corrections,SubmissionResources,HomeworkResources, Board,School_Board_Bridge
 
 admin.site.register(user)
 
@@ -19,4 +19,9 @@ admin.site.register(ClassSubjects)
 admin.site.register(ClassEnrollment)
 admin.site.register(Homework)
 admin.site.register(Submissions)
-
+admin.site.register(School_Board_Bridge)
+admin.site.register(Board)
+admin.site.register(HomeworkResources)
+admin.site.register(SubmissionResources)
+admin.site.register(Corrections)
+admin.site.register(CorrectionsResources)

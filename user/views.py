@@ -7,8 +7,9 @@ from rest_framework.parsers import JSONParser
 from user.serializers import userSerializer
 from rest_framework.decorators import api_view,APIView
 from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError
 
-
+from rest_framework import generics
 
 # Create your views here.
 def index(request):
@@ -65,11 +66,66 @@ def get_user(request, id):
 		user_detail.delete()
 		return Response(status= status.HTTP_204_NO_CONTENT)
 
+#####----------We can also use class based views to List , update, delete user from DB (CRUD)-------------------##
+
+
+class UserList(generics.ListAPIView):
+	queryset = user.objects.all()
+	serializer_class = userSerializer
+
+class UserCreate(generics.CreateAPIView):
+	serializer_class = userSerializer
+
+	def create(self, request, *args, **kwargs):
+		try:
+			first_name = request.data.get('first_name')
+			last_name = request.data.get('last_name')
+			phone_number = request.data.get('phone_number')
+
+			if first_name is None or last_name is None or phone_number is None:
+				raise ValidationError({'last_name and first_name and phone_number':'must be included'})
+		except Exception as e:
+			print(e)
+		return super().create(request, *args, **kwargs)
+
+
+class UserRetrieve(generics.RetrieveAPIView):
+	serializer_class = userSerializer
+	queryset = user.objects.all()
+	lookup_field = 'user_id'
+
+	def Retrieve(self,request, *args, **kwargs):
+		user_detail = request.data.get('user_id')
+		response = super().retrieve(request , *args, **kwargs)
+		return response
+
+class UserDestroy(generics.DestroyAPIView):
+	serializer_class = userSerializer
+	queryset = user.objects.all()
+	lookup_field = 'user_id'
+
+	def delete(self,request, *args, **kwargs):
+		user_detail = request.data.get('user_id')
+		respone = super().delete(request , *args, **kwargs)
+		return respone
+
+class UserUpdate(generics.UpdateAPIView):
+	serializer_class = userSerializer
+	queryset = user.objects.all()
+	lookup_field = 'user_id'
+
+	def Retrieve(self,request, *args, **kwargs):
+		user_detail = request.data.get('user_id')
+		response = super().retrieve(request , *args, **kwargs)
+		return response
+
+	def update(self, request, *args, **kwargs):
+		user_detail = request.data.get('user_id')
+		response = super().update(request, *args, **kwargs)
+		return response
 
 
 
-
-# def submit_assignment():
 
 
 
