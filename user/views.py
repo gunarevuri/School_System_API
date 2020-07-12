@@ -73,13 +73,17 @@ def get_user(request, id):
 		user_detail.delete()
 		return Response(status= status.HTTP_204_NO_CONTENT)
 
-
+ # --- Api To get submissions related endpoints ------#
+ 
 @api_view(['GET', 'PUT', 'POST', 'DELETE'])
 def get_user_submissions(request, id):
 
 
 	if request.method == 'GET':
 		student_submissions = Submissions.objects.filter(student_id = id).first()
+
+		if student_submissions is None:
+			return Response(status = status.HTTP_400_BAD_REQUEST)
 
 	# store all submission by specific student in submissions_by_student 
 		submissions_by_student = SubmissionResources.objects.filter(submission_id = student_submissions.submission_id ).all()
@@ -90,13 +94,11 @@ def get_user_submissions(request, id):
 
 @api_view(['GET'])
 def get_all_submissions(request):
+
 	if request.method == 'GET':
 		submissions = Submissions.objects.all()
 		serializer = SubmissionsSerializer(submissions, many = True)
 		return Response(serializer.data)
-
-
-
 
 
 
@@ -160,7 +162,6 @@ class UserUpdate(generics.UpdateAPIView):
 
 
 ## ------ API to get all submissions and submission to specific user-----##
-
 
 
 

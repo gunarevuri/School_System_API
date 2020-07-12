@@ -37,6 +37,6 @@ urlpatterns = [
 	path('class/v1/users/<int:user_id>/update/', user_views.UserUpdate.as_view(), name='classupdate'),
 ]
 
-urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+# urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
+# urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 

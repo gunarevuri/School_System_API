@@ -16,5 +16,5 @@ class SubmissionsSerializer(serializers.ModelSerializer):
 class SubmissionResourcesSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = SubmissionResources
-		fields = ['submissions_resource_id', 'submission_id', 'resource_link' ,'caption']
+		fields = ['submissions_resource_id', 'submission_id', 'resource_type','resource_image','resource_video','resource_File','resource_link' ,'caption']
 

@@ -4,14 +4,14 @@ from phonenumber_field.modelfields import PhoneNumberField
 status_field = ['actice','inactive']
 enroll_status = ['enrolled','not_enrolled']
 class_subjects = ['maths','science','social','phisics']
-homework_resource_type=[]
-correction_resource_type= []
-submissions_resource_type = []
+homework_resource_type=['video','image','file','text']
+correction_resource_type= ['video', 'image', 'file', 'text']
+submissions_resource_type = ['video', 'image', 'file', 'text']
 
 class user(models.Model):
 	user_id = models.AutoField(primary_key=True)
-	first_name = models.CharField(max_length=255, blank=False)
-	last_name = models.CharField(max_length=255, blank=False)
+	first_name = models.CharField(max_length=255, )
+	last_name = models.CharField(max_length=255, )
 	phone_number = PhoneNumberField(blank=False)
 	status = models.CharField(choices=[(x,x) for x in status_field], max_length=100)
 	created_at = models.DateTimeField(auto_now_add=True)
@@ -28,7 +28,7 @@ class School(models.Model):
 	state_id = models.IntegerField()
 	city_id = models.IntegerField()
 	contact_number = PhoneNumberField(blank=True)
-	photo = models.ImageField(upload_to ='files_images/school_photo/',max_length=250,height_field=None,width_field=None)
+	photo = models.ImageField(upload_to ='schoolimages/school_photos/',max_length=250,height_field=None,width_field=None)
 	rural = models.BooleanField()
 	district = models.CharField(max_length=255)
 	block = models.CharField(max_length=255)
@@ -65,7 +65,7 @@ class Student(models.Model):
 	gender = models.CharField(choices=[('M','Male'),('F','Female'),('not interested','not interested')], max_length=100)
 	status = models.CharField(choices=[(x,x) for x in status_field],max_length=50)
 	year_of_birth= models.IntegerField()
-	photo = models.ImageField(upload_to ='files_images/student_photo/',max_length=250,height_field=None,width_field=None)
+	photo = models.ImageField(upload_to ='Student/student_photos/',max_length=250,height_field=None,width_field=None)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
@@ -79,7 +79,7 @@ class Teacher(models.Model):
 	school_id = models.ForeignKey(School, on_delete=models.CASCADE)
 	gender = models.CharField(choices=[('M','Male'),('F','Female'),('not interested','not interested')], max_length=100)
 	year_of_birth= models.IntegerField()
-	photo = models.ImageField(upload_to ='files_images/teacher_photo/',max_length=250,height_field=None,width_field=None)
+	photo = models.ImageField(upload_to ='Teacher/teacher_photos/',max_length=250,height_field=None,width_field=None)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
@@ -169,8 +169,13 @@ class ClassEnrollment(models.Model):
 class SubmissionResources(models.Model):
 	submissions_resource_id = models.AutoField(primary_key=True)
 	submission_id = models.ForeignKey(Submissions, on_delete = models.CASCADE)
-	resource_type = models.CharField(choices=[(x,x) for x in submissions_resource_type], max_length= 100, null=True,blank=True)
-	resource_link = models.URLField(max_length=500)
+	resource_type = models.CharField(choices=[(x,x) for x in submissions_resource_type], max_length= 500, null=True,blank=True)
+
+	resource_image = models.ImageField(upload_to='SubmissionResources/', verbose_name="Image Resource (optional)", null=True,blank=True)
+	resource_video = models.FileField(upload_to='SubmissionResources/' ,verbose_name="Video Resouce (optional)", null=True,blank=True)
+	resource_File = models.FileField(upload_to='SubmissionResources/', verbose_name="File Resouce (optional)", null=True,blank=True)
+
+	resource_link = models.URLField( max_length=500, )
 	caption = models.CharField(max_length=255)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -190,7 +195,11 @@ class CorrectionsResources(models.Model):
 	correction_resource_id = models.AutoField(primary_key=True)
 	correction_id = models.ForeignKey(Corrections, on_delete = models.CASCADE)
 	resource_type = models.CharField(choices=[(x,x) for x in correction_resource_type], max_length=200, null=True,blank=True)
-	resource_link = models.URLField(max_length= 500)
+	resource_image = models.ImageField(upload_to='correction_resources/', verbose_name="Image Resource (optional)", null=True,blank=True)
+	resource_video = models.FileField(upload_to='correction_resources/', verbose_name='Video Resouce (optional)', null=True,blank=True)
+	resource_File = models.FileField(upload_to='correction_resources/' ,verbose_name='File Resouce (optional)', null=True,blank=True)
+
+	resource_link = models.URLField(max_length= 500,null=True, blank=True, )
 	caption = models.CharField(max_length= 255)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -200,7 +209,12 @@ class HomeworkResources(models.Model):
 	homework_resource_id = models.AutoField( primary_key = True)
 	homework_id = models.ForeignKey(Homework, on_delete = models.CASCADE)
 	resource_type = models.CharField(choices=[(x,x) for x in homework_resource_type], max_length=200, null=True,blank=True)
-	file_field = models.FileField(upload_to='files_images/homeworkresources/%Y/%m/%d/')
+	resource_image = models.ImageField(upload_to='HomeworkResources/%m/%d/', verbose_name="Image Resource (optional)", null=True,blank=True)
+	resource_video = models.FileField(upload_to='HomeworkResources/%m/%d/', verbose_name='Video Resouce (optional)', null=True,blank=True)
+	resource_File = models.FileField(upload_to='HomeworkResources/%m/%d/' ,verbose_name='File Resouce (optional)', null=True,blank=True)
+	file_field = models.FileField(upload_to='HomeworkResources/%m/%d/', null=True,blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
 
 
 

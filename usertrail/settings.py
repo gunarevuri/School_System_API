@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'user',
     'phonenumber_field',
     'rest_framework',
+    's3direct',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -103,6 +105,27 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AWS_ACCESS_KEY_ID = 'AKIAYCFIRRK76MOKLIWR' # access key
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'schoolapitrail6037'
+AWS_S3_REGION_NAME = 'ap-south-1'
+# AWS_S3_ENDPOINT_URL = 'https://schoolapitrail6037.s3.ap-south-1.amazonaws.com'
+
+# S3DIRECT_DESTINATIONS = {
+#     'primary_destination': {
+#         'key': 'uploads/',
+#         'allowed': ['image/jpg', 'image/jpeg', 'image/png','video/mp4'],
+#     },
+    # 'primary_destination_videos':{
+    #     'key': 'uploads/videos',
+    #     'allowed': ['video/mp4']
+#     # }
+# }
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -116,8 +139,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR
 
 
 # Static files (CSS, JavaScript, Images)
