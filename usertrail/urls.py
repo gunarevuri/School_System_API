@@ -25,8 +25,9 @@ urlpatterns = [
 	path('', user_views.index, name='index'),
 	path('v1/users/', user_views.users_list, name='userslist'),
 	path('v1/users/<int:id>/', user_views.get_user, name='userdetails'),
-	path('v1/users/submissions/<int:id>/', user_views.get_user_submissions, name='get_user_submissions'),
-	path('v1/users/submissions/', user_views.get_all_submissions, name='get_all_submissions'),
+	path('v1/users/<int:id>/submissions/', user_views.get_user_submissions, name='get_user_submissions'),
+	path('v1/submissions/', user_views.get_all_submissions, name='get_all_submissions'),
+	path('v1/submissions/<int:id>/', user_views.get_one_submission, name='get_one_submission'),
 
 
 

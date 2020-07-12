@@ -92,13 +92,50 @@ def get_user_submissions(request, id):
 		# serializer = SubmissionsSerializer(student_submissions)
 		return Response(serializer.data)
 
-@api_view(['GET'])
+@api_view(['GET','POST'])
 def get_all_submissions(request):
-
 	if request.method == 'GET':
 		submissions = Submissions.objects.all()
 		serializer = SubmissionsSerializer(submissions, many = True)
 		return Response(serializer.data)
+
+	if request.method == 'POST':
+		serializer = SubmissionsSerializer(data = request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return JsonResponse(serializer.data, status = status.HTTP_201_CREATED)
+		else:
+			return JsonResponse(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['GET','PUT','POST','DELETE'])
+def get_one_submission(request, id):
+	try:
+		submission = Submissions.objects.filter(submission_id = id).all()
+		if submission is None:
+			return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
+	except Exception as e:
+		print(e)
+
+
+	if request.method == 'GET':
+		sereializer = SubmissionsSerializer(submission)
+		return Response(sereializer.data)
+
+	elif request.method == 'PUT':
+		serializer = SubmissionsSerializer(submission, data = request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data)
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+	elif request.method == 'DELETE':
+		submission.delete()
+		return Response(status= status.HTTP_204_NO_CONTENT)
+
+
+
 
 
 
