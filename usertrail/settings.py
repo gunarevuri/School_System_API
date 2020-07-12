@@ -105,8 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-AWS_ACCESS_KEY_ID = 'AKIAYCFIRRK76MOKLIWR' # access key
-AWS_SECRET_ACCESS_KEY = 't9Cpouk57LbEsZ3fTovquohT8G+IK/9q8ilfloUq'
+AWS_ACCESS_KEY_ID = 'AKIAYCFIRRK76MOKLIWR' # access  key id IAM user
+AWS_SECRET_ACCESS_KEY = 'your aws secret key'
 AWS_STORAGE_BUCKET_NAME = 'schoolapitrail6037'
 AWS_S3_REGION_NAME = 'ap-south-1'
 # AWS_S3_ENDPOINT_URL = 'https://schoolapitrail6037.s3.ap-south-1.amazonaws.com'
