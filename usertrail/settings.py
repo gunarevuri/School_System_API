@@ -105,7 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-AWS_ACCESS_KEY_ID = 'AKIAYCFIRRK76MOKLIWR' # access  key id IAM user
+AWS_ACCESS_KEY_ID = '' # access  key id IAM user
 AWS_SECRET_ACCESS_KEY = 'your aws secret key'
 AWS_STORAGE_BUCKET_NAME = 'schoolapitrail6037'
 AWS_S3_REGION_NAME = 'ap-south-1'
