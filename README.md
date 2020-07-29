@@ -21,3 +21,19 @@ No only these filed ..optional fields can be added
 ```
 https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
 ```
+
+Last but not least, You should add CORS to your bucket to get out of mysterious problems.
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+   <CORSRule>
+        <AllowedOrigin>*</AllowedOrigin>
+        <AllowedMethod>GET</AllowedMethod>
+        <AllowedMethod>POST</AllowedMethod>
+        <AllowedMethod>PUT</AllowedMethod>
+        <AllowedHeader>*</AllowedHeader>
+    </CORSRule>
+</CORSConfiguration>
+```
+
+Add this code and save.
