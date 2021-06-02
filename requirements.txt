@@ -48,7 +48,7 @@ selenium==3.141.0
 six==1.14.0
 SQLAlchemy==1.3.16
 sqlparse==0.3.1
-urllib3==1.25.9
+urllib3==1.26.5
 virtualenv==20.0.21
 Werkzeug==1.0.1
 WTForms==2.3.1
